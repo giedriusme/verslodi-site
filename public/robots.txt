@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /privacy
+Disallow: /cookies
+
+Sitemap: https://example.com/sitemap.xml
