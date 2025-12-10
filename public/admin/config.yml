@@ -3,15 +3,15 @@ backend:
   repo: giedriusme/verslodi-site   # <- palik savo owner/repo
   branch: main
   base_url: https://www.verslodi.lt
-  auth_endpoint: api/auth          # <- be pirmo "/"
+  auth_endpoint: /api/auth         # BŪTINAI su pirmu "/"
 
-media_folder: "public/uploads"     # failai saugomi repozitorijoje
-public_folder: "/uploads"          # kaip jie bus pasiekiami svetainėje
+media_folder: "public/uploads"     # failai saugomi repo
+public_folder: "/uploads"          # kaip jie pasiekiami svetainėje
 
-# Palik, jei nori juodraščių ir peržiūros prieš publikavimą
+# Jei nori juodraščių/peržiūros prieš publikaciją
 publish_mode: editorial_workflow
 
-# (nebūtina) – logotipas CMS'e
+# (neprivaloma) logotipas viršuje Admin'e
 # logo_url: "https://www.verslodi.lt/uploads/cms-logo.png"
 
 collections:
