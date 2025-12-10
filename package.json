@@ -35,8 +35,9 @@
     "tailwindcss": "^3.4.17",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.35.1",
-    "vite": "^7.0.3",
     "unplugin-auto-import": "^19.3.0",
-     "source-map": "^0.7.6"
+    "vite": "^7.0.3",
+    "vite-plugin-html": "^3.2.2",
+    "source-map": "^0.7.6"
   }
 }
