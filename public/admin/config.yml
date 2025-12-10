@@ -1,30 +1,30 @@
 backend:
   name: github
-  repo: giedriusme/verslodi-site   # <- palik savo owner/repo
+  repo: giedriusme/verslodi-site
   branch: main
   base_url: https://www.verslodi.lt
-  auth_endpoint: /api/auth         # BŪTINAI su pirmu "/"
+  auth_endpoint: /api/auth
 
-media_folder: "public/uploads"     # failai saugomi repo
-public_folder: "/uploads"          # kaip jie pasiekiami svetainėje
+media_folder: public/uploads      # failai saugomi repozitorijoje
+public_folder: /uploads           # kaip jie pasiekiami svetainėje
 
-# Jei nori juodraščių/peržiūros prieš publikaciją
-publish_mode: editorial_workflow
-
-# (neprivaloma) logotipas viršuje Admin'e
-# logo_url: "https://www.verslodi.lt/uploads/cms-logo.png"
+publish_mode: editorial_workflow  # juodraščiai + peržiūros prieš publikaciją
+locale: lt
+editor:
+  preview: false                  # (nebūtina) išjungia gyvą peržiūrą admin’e
+# logo_url: https://www.verslodi.lt/uploads/cms-logo.png  # (nebūtina) logotipas
 
 collections:
-  - name: "seo"
-    label: "SEO nustatymai"
+  - name: seo
+    label: SEO nustatymai
     files:
-      - name: "home"
-        label: "Pagrindinis puslapis"
-        file: "content/seo.json"
+      - name: home
+        label: Pagrindinis puslapis
+        file: content/seo.json
         fields:
           - { label: "Svetainės URL", name: "siteUrl", widget: "string" }
           - { label: "Pavadinimas (title)", name: "title", widget: "string" }
           - { label: "Aprašymas (description)", name: "description", widget: "text" }
-          - { label: "OG nuotrauka (dalinimosi)", name: "ogImage", widget: "image" }
-          - { label: "Favicon", name: "favicon", widget: "image" }
+          - { label: "OG nuotrauka (dalinimosi)", name: "ogImage", widget: "image", choose_url: true }
+          - { label: "Favicon", name: "favicon", widget: "image", choose_url: true }
           - { label: "Svetainės pavadinimas (og:site_name)", name: "siteName", widget: "string" }
