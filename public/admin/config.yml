@@ -1,14 +1,22 @@
 backend:
   name: github
-  repo: giedriusme/verslodi-site   # ← pakeisk į SAVO “owner/repo”
+  repo: giedriusme/verslodi-site   # <- palik savo owner/repo
   branch: main
-  base_url: https://www.verslodi.lt     # tavo svetainės adresas (kol kas gali būti ir vercel.app)
-  auth_endpoint: /api/auth              # žemiau pridėsime šį prisijungimą
+  base_url: https://www.verslodi.lt
+  auth_endpoint: api/auth          # <- be pirmo "/"
 
-media_folder: "public/uploads"
-public_folder: "/uploads"
+media_folder: "public/uploads"     # failai saugomi repozitorijoje
+public_folder: "/uploads"          # kaip jie bus pasiekiami svetainėje
 
+# Palik, jei nori juodraščių ir peržiūros prieš publikavimą
 publish_mode: editorial_workflow
+
+# (nebūtina) – ribos ir piktogramos
+media_library:
+  max_file_size: 10MB
+
+# (nebūtina) – logotipas CMS'e
+# logo_url: "https://www.verslodi.lt/uploads/cms-logo.png"
 
 collections:
   - name: "seo"
@@ -18,9 +26,9 @@ collections:
         label: "Pagrindinis puslapis"
         file: "content/seo.json"
         fields:
-          - {label: "Svetainės URL", name: "siteUrl", widget: "string"}
-          - {label: "Pavadinimas (title)", name: "title", widget: "string"}
-          - {label: "Aprašymas (description)", name: "description", widget: "text"}
-          - {label: "OG nuotrauka (dalinimosi)", name: "ogImage", widget: "image"}
-          - {label: "Favicon", name: "favicon", widget: "image"}
-          - {label: "Svetainės pavadinimas (og:site_name)", name: "siteName", widget: "string"}
+          - { label: "Svetainės URL", name: "siteUrl", widget: "string" }
+          - { label: "Pavadinimas (title)", name: "title", widget: "string" }
+          - { label: "Aprašymas (description)", name: "description", widget: "text" }
+          - { label: "OG nuotrauka (dalinimosi)", name: "ogImage", widget: "image" }
+          - { label: "Favicon", name: "favicon", widget: "image" }
+          - { label: "Svetainės pavadinimas (og:site_name)", name: "siteName", widget: "string" }
