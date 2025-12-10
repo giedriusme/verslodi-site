@@ -2,49 +2,53 @@
 <html lang="lt">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="https://static.readdy.ai/image/0b415033dc3c77175cdee172dc914215/acf30a5d24ec05f330974169db970d10.png" />
+    <link rel="icon" type="image/png" href="<%= favicon %>" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <!-- SEO Meta Tags -->
-    <title>VersloDI — Nepriklausomas DI Konsultantas Verslui</title>
-    <meta name="description" content="Pirmiausia – procesai. Tada – DI. Pamatuojami rezultatai per 2–4 savaites • 6–12 mėn. veiksmų planas • investicijų grąžos skaičiavimas • sprendimai nepriklausomi nuo tiekėjų. Susitarkime 30 min. pokalbiui." />
+
+    <!-- SEO Meta -->
+    <title><%= title %></title>
+    <meta name="description" content="<%= description %>">
+    <link rel="canonical" href="<%= canonical %>">
+    <meta name="last-modified" content="<%= lastModified %>">
+
+    <!-- Papildoma (gali likti statiniai raktiniai žodžiai) -->
     <meta name="keywords" content="DI konsultantas Lietuva, dirbtinis intelektas, automatizavimas, skaitmenizacija, verslo procesų optimizavimas, ROI, vendor-agnostic" />
-    <meta name="author" content="VersloDI" />
-    <link rel="canonical" href="https://example.com/" />
-    <meta name="last-modified" content="2025-01-15" />
-    
-    <!-- Geo Tags -->
+    <meta name="author" content="<%= siteName %>" />
+
+    <!-- Geo -->
     <meta name="geo.region" content="LT" />
     <meta name="geo.placename" content="Lietuva" />
-    
+
     <!-- Open Graph -->
-    <meta property="og:title" content="VersloDI — Nepriklausomas DI Konsultantas Verslui" />
-    <meta property="og:description" content="Pirmiausia – procesai. Tada – DI. Pamatuojami rezultatai per 2–4 savaites • 6–12 mėn. veiksmų planas • investicijų grąžos skaičiavimas • sprendimai nepriklausomi nuo tiekėjų." />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://example.com/" />
-    <meta property="og:image" content="https://example.com/og-image.jpg" />
-    
-    <!-- Twitter Card -->
+    <meta property="og:site_name" content="<%= siteName %>" />
+    <meta property="og:url" content="<%= canonical %>" />
+    <meta property="og:title" content="<%= title %>" />
+    <meta property="og:description" content="<%= description %>" />
+    <meta property="og:image" content="<%= ogImage %>" />
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="VersloDI — Nepriklausomas DI Konsultantas Verslui" />
-    <meta name="twitter:description" content="Pirmiausia – procesai. Tada – DI. Pamatuojami rezultatai per 2–4 savaites • 6–12 mėn. veiksmų planas • investicijų grąžos skaičiavimas." />
-    
-    <!-- H1 for SEO -->
-    <h1 style="position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;">VersloDI</h1>
-    
-    <!-- Font Awesome -->
+    <meta name="twitter:title" content="<%= title %>" />
+    <meta name="twitter:description" content="<%= description %>" />
+    <meta name="twitter:image" content="<%= ogImage %>" />
+
+    <!-- Ikonos / šriftai -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <!-- Remix Icon -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
   </head>
   <body>
+    <!-- Paslėptas H1 SEO'ui (perkeltas į body) -->
+    <h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">
+      <%= siteName %>
+    </h1>
+
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-    
+
     <!-- Readdy Agent Widget -->
     <script 
       src="https://readdy.ai/api/public/assistant/widget?projectId=5d640242-b32c-4207-a837-3feeb292004a"
