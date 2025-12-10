@@ -11,10 +11,6 @@ public_folder: "/uploads"          # kaip jie bus pasiekiami svetainėje
 # Palik, jei nori juodraščių ir peržiūros prieš publikavimą
 publish_mode: editorial_workflow
 
-# (nebūtina) – ribos ir piktogramos
-media_library:
-  max_file_size: 10MB
-
 # (nebūtina) – logotipas CMS'e
 # logo_url: "https://www.verslodi.lt/uploads/cms-logo.png"
 
