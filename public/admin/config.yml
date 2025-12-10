@@ -1,0 +1,26 @@
+backend:
+  name: github
+  repo: giedriusme/verslodi-site   # ← pakeisk į SAVO “owner/repo”
+  branch: main
+  base_url: https://www.verslodi.lt     # tavo svetainės adresas (kol kas gali būti ir vercel.app)
+  auth_endpoint: /api/auth              # žemiau pridėsime šį prisijungimą
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: "seo"
+    label: "SEO nustatymai"
+    files:
+      - name: "home"
+        label: "Pagrindinis puslapis"
+        file: "content/seo.json"
+        fields:
+          - {label: "Svetainės URL", name: "siteUrl", widget: "string"}
+          - {label: "Pavadinimas (title)", name: "title", widget: "string"}
+          - {label: "Aprašymas (description)", name: "description", widget: "text"}
+          - {label: "OG nuotrauka (dalinimosi)", name: "ogImage", widget: "image"}
+          - {label: "Favicon", name: "favicon", widget: "image"}
+          - {label: "Svetainės pavadinimas (og:site_name)", name: "siteName", widget: "string"}
