@@ -5,16 +5,11 @@
     <meta name="robots" content="noindex" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Admin</title>
-    <!-- (nebūtina) favicon, kad admin'e būtų tvarkingas tab'as -->
-    <link rel="icon" href="/uploads/favicon.png" />
+
+    <!-- Svarbu: pasakome Decap, kur yra config.yml -->
+    <link rel="cms-config-url" href="/admin/config.yml" />
   </head>
   <body>
-    <!-- Aiškiai nurodom, kur yra Decap CMS konfigas -->
-    <script>
-      window.CMS_CONFIG_PATH = "/admin/config.yml";
-    </script>
-
-    <!-- Decap CMS -->
-    <script src="https://unpkg.com/decap-cms@^3.9.0/dist/decap-cms.js"></script>
+    <script src="https://unpkg.com/decap-cms@^3/dist/decap-cms.js"></script>
   </body>
 </html>
