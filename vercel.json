@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/config.yml", "destination": "/admin/config.yml" }
+  ]
+}
