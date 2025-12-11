@@ -1,48 +1,58 @@
-// /api/auth/callback.js
+// api/auth/callback.js
 export default async function handler(req, res) {
-  const { code, state } = req.query || {};
-  const expected = req.cookies?.gh_oauth_state;
-
-  if (!code || !state || !expected || state !== expected) {
-    return res.status(400).send('Invalid OAuth state');
-  }
-
-  const client_id = process.env.OAUTH_CLIENT_ID;
-  const client_secret = process.env.OAUTH_CLIENT_SECRET;
-
   try {
-    const r = await fetch('https://github.com/login/oauth/access_token', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-      body: JSON.stringify({ client_id, client_secret, code })
-    });
-    const data = await r.json();
-    const accessToken = data.access_token;
-
-    if (!accessToken) {
-      return res.status(401).send('No access token from GitHub');
+    const clientId     = process.env.OAUTH_CLIENT_ID;
+    const clientSecret = process.env.OAUTH_CLIENT_SECRET;
+    if (!clientId || !clientSecret) {
+      return res.status(500).send('Missing OAuth env vars');
     }
 
-    res.setHeader('Content-Type', 'text/html; charset=utf-8');
-    res.setHeader('Cache-Control', 'no-store');
+    const { code, state } = req.query || {};
+    if (!code || !state) return res.status(400).send('Missing code/state');
 
-    // PostMessage + hash fallback (Decap supranta abu)
-    res.end(`<!doctype html><html><body>
-<script>
-  (function () {
-    var token = ${JSON.stringify(accessToken)};
-    try {
-      if (window.opener) {
-        window.opener.postMessage({ token: token, provider: 'github' }, '*');
-      }
-    } catch (e) {}
-    // Fallback: nukreipiam į Decap callback su access_token parametru
-    window.location.replace('/admin/#/auth/callback?access_token=' + encodeURIComponent(token));
-    setTimeout(function(){ document.body.innerText = 'You can close this window.'; }, 1500);
-  })();
-</script>
-</body></html>`);
-  } catch (err) {
-    res.status(500).send('OAuth exchange failed');
+    const cookieState = (req.headers.cookie || '')
+      .split(';')
+      .map(s => s.trim())
+      .find(s => s.startsWith('gh_oauth_state='))
+      ?.split('=')[1];
+
+    if (!cookieState || cookieState !== state) {
+      return res.status(400).send('Invalid state');
+    }
+
+    const proto = req.headers['x-forwarded-proto'] || 'https';
+    const host  = req.headers['x-forwarded-host'] || req.headers.host || 'www.verslodi.lt';
+    const base  = process.env.SITE_URL || `${proto}://${host}`;
+    const redirectUri = process.env.OAUTH_CALLBACK_URL || `${base}/api/auth/callback`;
+
+    const body = new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      code,
+      redirect_uri: redirectUri,
+    });
+
+    const resp = await fetch('https://github.com/login/oauth/access_token', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', 'Accept': 'application/json' },
+      body
+    });
+
+    const data = await resp.json();
+    if (!data.access_token) {
+      return res.status(400).send(`OAuth error: ${data.error || 'no token'}`);
+    }
+
+    // Išvalom state slapuką (galiojo visam domenui)
+    const bare = host.replace(/^www\./, '').split(':')[0];
+    res.setHeader('Set-Cookie', `gh_oauth_state=; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0; Domain=.${bare}`);
+
+    // Grąžinam abu pavadinimus — kai kurioms CMS versijoms reikia vieno arba kito
+    const admin = `${base}/admin/#/auth/callback?token=${data.access_token}&access_token=${data.access_token}`;
+
+    res.writeHead(302, { Location: admin });
+    res.end();
+  } catch (e) {
+    res.status(500).send('Callback failed');
   }
 }
