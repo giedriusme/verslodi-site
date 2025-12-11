@@ -3,7 +3,7 @@ backend:
   repo: giedriusme/verslodi-site
   branch: main
   base_url: https://www.verslodi.lt
-  auth_endpoint: /api/auth
+  auth_endpoint: api/auth
 
 media_folder: public/uploads      # failai saugomi repozitorijoje
 public_folder: /uploads           # kaip jie pasiekiami svetainėje
