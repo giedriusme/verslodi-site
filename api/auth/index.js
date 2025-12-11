@@ -1,4 +1,13 @@
-// api/auth/index.js
+// /api/auth/index.js
+import crypto from 'node:crypto';
+
+function normalizeBase(url) {
+  if (!url) return null;
+  // pašalinam galinį "/" ir verčiam į https://www....
+  const u = url.replace(/\/+$/, '');
+  return u;
+}
+
 export default async function handler(req, res) {
   const clientId = process.env.OAUTH_CLIENT_ID;
   if (!clientId) {
@@ -6,18 +15,30 @@ export default async function handler(req, res) {
     return;
   }
 
-  const proto = req.headers['x-forwarded-proto'] || 'https';
-  const host  = req.headers['x-forwarded-host'] || req.headers.host;
-  const base  = process.env.SITE_URL || `${proto}://${host}`;
+  // 1) Bazė – pirmiausia iš ENV, kad visada būtų https://www.verslodi.lt
+  const envBase = normalizeBase(process.env.SITE_URL);
+  const host = req.headers['x-forwarded-host'] || req.headers.host;
+  const base = envBase || `https://${host}`;
 
-  const redirectUri = process.env.OAUTH_CALLBACK_URL || `${base}/api/auth/callback`;
+  const callbackEnv = process.env.OAUTH_CALLBACK_URL; // pvz. https://www.verslodi.lt/api/auth/callback
+  const redirectUri = callbackEnv || `${base}/api/auth/callback`;
+
   const scope = process.env.OAUTH_SCOPE || 'public_repo,read:user';
 
-  // CSRF apsauga per state + HttpOnly slapuką
-  const state = Math.random().toString(36).slice(2);
-  res.setHeader('Set-Cookie',
-    `gh_oauth_state=${state}; Path=/; HttpOnly; SameSite=Lax; Secure; Max-Age=600`
-  );
+  // 2) Tvirtesnis state
+  const state = crypto.randomUUID();
+
+  // 3) Cookie – jei norėsi, kad veiktų ir apex, ir www, pridėk Domain=.verslodi.lt
+  const cookieParts = [
+    `gh_oauth_state=${state}`,
+    'Path=/',
+    'HttpOnly',
+    'SameSite=Lax',
+    'Secure',
+    'Max-Age=600'
+    // 'Domain=.verslodi.lt' // <- atkomentuok, jei tikrai naudosi ir apex, ir www
+  ];
+  res.setHeader('Set-Cookie', cookieParts.join('; '));
 
   const url = new URL('https://github.com/login/oauth/authorize');
   url.searchParams.set('client_id', clientId);
