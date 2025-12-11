@@ -1,29 +1,16 @@
-// api/auth/index.js
-export default async function handler(req, res) {
-  const clientId = process.env.OAUTH_CLIENT_ID;
-  if (!clientId) return res.status(500).send('Missing OAUTH_CLIENT_ID');
+import oauthProvider from 'netlify-cms-oauth-provider-node';
 
-  const proto = req.headers['x-forwarded-proto'] || 'https';
-  const host  = req.headers['x-forwarded-host'] || req.headers.host || 'www.verslodi.lt';
-  const base  = process.env.SITE_URL || `${proto}://${host}`;
+const { createVercelBeginHandler } = oauthProvider;
 
-  const redirectUri = process.env.OAUTH_CALLBACK_URL || `${base}/api/auth/callback`;
-  const scope = process.env.OAUTH_SCOPE || 'public_repo,read:user';
-
-  // CSRF state + slapukas galioja visam domenui (ir www, ir be www)
-  const state = Math.random().toString(36).slice(2);
-  const bare = host.replace(/^www\./, '').split(':')[0];
-  res.setHeader('Set-Cookie',
-    `gh_oauth_state=${state}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=600; Domain=.${bare}`
-  );
-
-  const url = new URL('https://github.com/login/oauth/authorize');
-  url.searchParams.set('client_id', clientId);
-  url.searchParams.set('redirect_uri', redirectUri);
-  url.searchParams.set('scope', scope);
-  url.searchParams.set('state', state);
-  url.searchParams.set('allow_signup', 'false');
-
-  res.writeHead(302, { Location: url.toString() });
-  res.end();
-}
+// Šitas handleris automatiškai:
+// - pasiima OAUTH_CLIENT_ID ir OAUTH_CLIENT_SECRET iš env
+// - naudoja ORIGIN ir COMPLETE_URL
+// - nukreipia į GitHub OAuth puslapį
+export default createVercelBeginHandler(
+  {
+    provider: 'github'
+  },
+  {
+    useEnv: true
+  }
+);
