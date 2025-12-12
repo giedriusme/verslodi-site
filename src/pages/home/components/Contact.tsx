@@ -1,5 +1,11 @@
 import { useState, useEffect } from 'react';
 
+const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzK0T_sfw2tZ4ISAOk5LRvch2xayeK4iT7KwTboAs4a1LeLbLOTKzAPwsfC50cD99Ng/exec";
+// ^^^ ČIA įklijuok savo Google Apps Script Web App URL
+
+type SubmitStatus = 'idle' | 'success' | 'error';
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     company: '',
@@ -14,7 +20,7 @@ export default function Contact() {
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>('idle');
   const [privacyAccepted, setPrivacyAccepted] = useState(false);
   const [newsletterAccepted, setNewsletterAccepted] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -36,23 +42,64 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!privacyAccepted) {
       alert('Prašome susipažinti su privatumo politika');
       return;
     }
-    
+
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
+
+    try {
+      // Duomenys, kurie keliaus į Google Sheets
+      const payload = {
+        companyName: formData.company,      // Įmonės pavadinimas
+        sector: formData.sector,           // Sektorius
+        companySize: formData.size,        // Įmonės dydis
+        topProcesses: formData.processes,  // Top-3 procesai
+        pains: formData.pain,              // Pagrindiniai skausmai / iššūkiai
+        tools: formData.tools,             // Dabartiniai įrankiai
+        kpiGoals: formData.kpi,            // KPI tikslai
+        budgetRange: formData.budget,      // Biudžeto intervalas
+        timeline: formData.timeline,       // Norimas terminas
+        newsletterConsent: newsletterAccepted // Naujienlaiškis sutiktas (true/false)
+      };
+
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        // specialiai BE Content-Type, kad būtų "simple request"
+        body: JSON.stringify(payload)
+      });
+
       setSubmitStatus('success');
+
+      // išvalom formą
+      setFormData({
+        company: '',
+        sector: '',
+        size: '',
+        processes: '',
+        pain: '',
+        tools: '',
+        kpi: '',
+        budget: '',
+        timeline: ''
+      });
+      setPrivacyAccepted(false);
+      setNewsletterAccepted(false);
+    } catch (error) {
+      console.error('Google Sheets form submit error', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
       setTimeout(() => setSubmitStatus('idle'), 5000);
-    }, 1500);
+    }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -80,13 +127,13 @@ export default function Contact() {
                 <i className="ri-calendar-check-line text-2xl text-white"></i>
               </div>
               <div>
-                <h3 className="text-xl sm:text-2xl font-bold text-[#0A4834]">Rezervuokite Laiką</h3>
+                <h3 className="text-xl sm:text-2xl font-bold text[#0A4834]">Rezervuokite Laiką</h3>
                 <p className="text-sm text-[#0A4834]/70">30 min. konsultacija</p>
               </div>
             </div>
-            
-            <div 
-              className="calendly-inline-widget rounded-xl overflow-hidden" 
+
+            <div
+              className="calendly-inline-widget rounded-xl overflow-hidden"
               data-url="https://calendly.com/giedriusme/30min"
               style={{ minWidth: '100%', height: '700px' }}
             ></div>
@@ -104,8 +151,8 @@ export default function Contact() {
               </p>
               <p className="text-sm sm:text-base text-[#0A4834]">
                 Arba rašykite:{' '}
-                <a 
-                  href="mailto:giedrius@versloDI.lt" 
+                <a
+                  href="mailto:giedrius@versloDI.lt"
                   className="text-[#9F8151] hover:underline font-bold break-all"
                 >
                   giedrius@versloDI.lt
@@ -126,7 +173,9 @@ export default function Contact() {
                 <i className="ri-close-line text-2xl text-[#0A4834]"></i>
               </button>
 
-              <h3 className="text-xl sm:text-2xl font-bold text-[#0A4834] mb-6 clear-both">Užklausos Forma</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-[#0A4834] mb-6 clear-both">
+                Užklausos Forma
+              </h3>
               <form onSubmit={handleSubmit} className="space-y-5">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div>
@@ -252,7 +301,7 @@ export default function Contact() {
                       name="budget"
                       value={formData.budget}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-white border-2 border-[#0A4834]/20 rounded-xl focus:border-[#9F8151] focus:outline-none text-[#0A4834] pr-8 cursor-pointer"
+                      className="w-full px-4 py-3 bg-white border-2 border-[#0A4834]/20 rounded-xl focus:border[#9F8151] focus:outline-none text-[#0A4834] pr-8 cursor-pointer"
                     >
                       <option value="">Pasirinkite...</option>
                       <option value="<5k">&lt; €5 000</option>
@@ -293,8 +342,8 @@ export default function Contact() {
                     />
                     <label htmlFor="privacy" className="text-sm text-[#0A4834] cursor-pointer">
                       Susipažinau su{' '}
-                      <a 
-                        href="/privatumo-politika" 
+                      <a
+                        href="/privatumo-politika"
                         target="_blank"
                         className="text-[#9F8151] font-bold hover:underline"
                       >
@@ -313,7 +362,8 @@ export default function Contact() {
                       className="mt-1 w-5 h-5 rounded border-2 border-[#0A4834]/30 text-[#0A4834] focus:ring-[#9F8151] cursor-pointer flex-shrink-0"
                     />
                     <label htmlFor="newsletter" className="text-sm text-[#0A4834] cursor-pointer">
-                      Sutinku gauti naujienas ir pasiūlymus apie naujausius ir naudingiausius DI įrankius bei sprendimus verslui
+                      Sutinku gauti naujienas ir pasiūlymus apie naujausius ir naudingiausius DI
+                      įrankius bei sprendimus verslui
                     </label>
                   </div>
                 </div>
@@ -339,8 +389,15 @@ export default function Contact() {
                 {submitStatus === 'success' && (
                   <div className="bg-green-100 border-2 border-green-500 rounded-xl p-4 flex items-center space-x-3">
                     <i className="ri-checkbox-circle-fill text-2xl text-green-600"></i>
-                    <p className="text-green-800 font-semibold">
-                      Ačiū! Susisieksiu per 24 valandas.
+                    <p className="text-green-800 font-semibold">Ačiū! Susisieksiu per 24 valandas.</p>
+                  </div>
+                )}
+
+                {submitStatus === 'error' && (
+                  <div className="bg-red-100 border-2 border-red-500 rounded-xl p-4 flex items-center space-x-3">
+                    <i className="ri-error-warning-fill text-2xl text-red-600"></i>
+                    <p className="text-red-800 font-semibold">
+                      Kažkas nepavyko. Pabandykite dar kartą arba parašykite tiesiogiai el. paštu.
                     </p>
                   </div>
                 )}
