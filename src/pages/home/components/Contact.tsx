@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 // ⬇️ ČIA PALIK savo Web App URL iš Google Apps Script
 const GOOGLE_SCRIPT_URL =
-  "https://script.google.com/macros/s/AKfycbzK0T_sfw2tZ4ISAOk5LRvch2xayeK4iT7KwTboAs4a1LeLbLOTKzAPwsfC50cD99Ng/exec";
+  "https://script.google.com/macros/s/AKfycbxD20X-PtTjfNlStdu3cJ7xgkpvEF_hU-W6XDppl1bQPPm-m4Cqtu1ibea-7K7qeIS7/exec";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
