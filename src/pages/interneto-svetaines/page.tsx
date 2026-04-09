@@ -742,7 +742,7 @@ export default function InternetoSvetainesPage() {
 
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-sm text-slate-500">
-                      Gavęs užklausą, susisieksiu su tavimi artimiausiu metu.
+                      Užpildyk formą, o aš netrukus su tavimi susisieksiu.
                     </p>
 
                     <button
