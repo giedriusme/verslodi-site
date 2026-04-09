@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/config.yml", "destination": "/admin/config.yml" },
+    { "source": "/interneto-svetaines", "destination": "/interneto-svetaines/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
