@@ -23,7 +23,7 @@ const projectList = [
     image: "/uploads/project-siltoszvakes.png",
     category: "Elektroninė parduotuvė",
     description:
-      "Pilnai veikianti elektroninė parduotuvė su prekių pristatymu, krepšeliu, atsiskaitymu ir aiškia produktų pateikimo struktūra.",
+      "Pilnai veikianti elektroninė parduotuvė su prekių pateikimu, krepšeliu, atsiskaitymu ir aiškia struktūra.",
     features: [
       "Elektroninė prekyba",
       "Produktų katalogas",
@@ -100,7 +100,7 @@ export default function InternetoSvetainesPage() {
       <main className="pt-28">
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-[#0A4834] via-[#0f6a4d] to-slate-900 opacity-95" />
-          <div className="relative max-w-6xl mx-auto px-6 py-20 md:py-28">
+          <div className="relative mx-auto max-w-6xl px-6 py-20 md:py-28">
             <div className="max-w-3xl">
               <p className="inline-flex items-center rounded-full bg-white/10 px-4 py-2 text-sm font-medium text-white ring-1 ring-white/20 backdrop-blur">
                 Interneto svetainių kūrimas
@@ -135,9 +135,9 @@ export default function InternetoSvetainesPage() {
           </div>
         </section>
 
-        <section id="kainos" className="max-w-6xl mx-auto px-6 py-16 md:py-20">
+        <section id="kainos" className="mx-auto max-w-6xl px-6 py-16 md:py-20">
           <div className="mb-10 max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
               Kainų variantai
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
@@ -230,7 +230,7 @@ export default function InternetoSvetainesPage() {
           </div>
         </section>
 
-        <section className="max-w-6xl mx-auto px-6 pb-16">
+        <section className="mx-auto max-w-6xl px-6 pb-16">
           <div className="rounded-3xl border border-slate-200 bg-slate-50 p-8 md:p-10">
             <div className="max-w-3xl">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900">
@@ -247,7 +247,7 @@ export default function InternetoSvetainesPage() {
                 "Papildomas puslapis — nuo 29 €",
                 "Antra kalba — nuo 79 €",
                 "Privatumo politika ir slapukų puslapis — nuo 39 €",
-                "Tekstų sutvarkymas ar perrašymas — nuo 49 €",
+                "Tekstų paruošimas ar sutvarkymas — nuo 49 €",
                 "Rezervacijos forma arba kalendoriaus prijungimas — nuo 79 €",
                 "Susirašinėjimo mygtuko įdėjimas — nuo 19 €",
                 "Svetainės priežiūra po paleidimo — nuo 29 € / mėn.",
@@ -264,9 +264,9 @@ export default function InternetoSvetainesPage() {
           </div>
         </section>
 
-        <section id="projektai" className="max-w-6xl mx-auto px-6 pb-16">
+        <section id="projektai" className="mx-auto max-w-6xl px-6 pb-16">
           <div className="mb-10 max-w-3xl">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
               Svetainės, kurias jau sukūriau
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600">
@@ -323,7 +323,7 @@ export default function InternetoSvetainesPage() {
           </div>
         </section>
 
-        <section id="uzklausa" className="max-w-6xl mx-auto px-6 pb-16">
+        <section id="uzklausa" className="mx-auto max-w-6xl px-6 pb-16">
           <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
             <div className="rounded-3xl bg-gradient-to-br from-slate-900 to-[#0A4834] p-8 text-white">
               <h2 className="text-3xl font-bold tracking-tight">
@@ -337,7 +337,7 @@ export default function InternetoSvetainesPage() {
               <ul className="mt-8 space-y-3 text-white/90">
                 <li>• Kuo aiškesnė užklausa, tuo tikslesnį pasiūlymą gausi</li>
                 <li>• Gali rašyti paprastai, be techninių terminų</li>
-                <li>• Jei neturi visų detalių, vis tiek pildyk — padėsiu susidėlioti</li>
+                <li>• Jei dar neturi tekstų ar nuotraukų, vis tiek pildyk formą</li>
               </ul>
             </div>
 
@@ -377,7 +377,7 @@ export default function InternetoSvetainesPage() {
                         htmlFor="name"
                         className="mb-2 block text-sm font-semibold text-slate-800"
                       >
-                        Vardas *
+                        Vardas, Pavardė *
                       </label>
                       <input
                         id="name"
@@ -566,6 +566,10 @@ export default function InternetoSvetainesPage() {
                       >
                         Ar jau turite tekstus?
                       </label>
+                      <p className="mb-2 text-sm text-slate-500">
+                        Nebūtina jų turėti iš anksto — prireikus padėsiu su
+                        tekstais ir jų struktūra.
+                      </p>
                       <select
                         id="hasTexts"
                         name="hasTexts"
@@ -588,6 +592,9 @@ export default function InternetoSvetainesPage() {
                       >
                         Ar jau turite logotipą?
                       </label>
+                      <p className="mb-2 text-sm text-slate-500">
+                        Jei jo dar neturite, sprendimą galėsime numatyti vėliau.
+                      </p>
                       <select
                         id="hasLogo"
                         name="hasLogo"
@@ -609,6 +616,10 @@ export default function InternetoSvetainesPage() {
                       >
                         Ar jau turite nuotraukas?
                       </label>
+                      <p className="mb-2 text-sm text-slate-500">
+                        Nebūtina jų turėti iš anksto — prireikus padėsiu
+                        susidėlioti, kokių nuotraukų reikės tavo svetainei.
+                      </p>
                       <select
                         id="hasImages"
                         name="hasImages"
@@ -631,6 +642,9 @@ export default function InternetoSvetainesPage() {
                       >
                         Ar reikės antros kalbos?
                       </label>
+                      <p className="mb-2 text-sm text-slate-500">
+                        Jei dar neapsisprendei, tai galėsime išsigryninti vėliau.
+                      </p>
                       <select
                         id="needsSecondLanguage"
                         name="needsSecondLanguage"
@@ -653,6 +667,10 @@ export default function InternetoSvetainesPage() {
                       >
                         Ar reikės registracijos / rezervacijos formos?
                       </label>
+                      <p className="mb-2 text-sm text-slate-500">
+                        Jei dar nežinai, vis tiek pildyk formą — padėsiu
+                        pasirinkti tinkamiausią variantą.
+                      </p>
                       <select
                         id="needsBooking"
                         name="needsBooking"
@@ -697,7 +715,7 @@ export default function InternetoSvetainesPage() {
                       name="examples"
                       rows={4}
                       className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
-                      placeholder="Įklijuok nuorodas į svetaines, kurių stilius ar struktūra tau patinka."
+                      placeholder="Jei turi, įklijuok nuorodas į svetaines, kurių stilius ar struktūra tau patinka."
                     />
                   </div>
 
@@ -724,7 +742,7 @@ export default function InternetoSvetainesPage() {
 
                   <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <p className="text-sm text-slate-500">
-                      Užpildyk formą, o aš netrukus su tavimi susisieksiu.
+                      Gavęs užklausą, susisieksiu su tavimi artimiausiu metu.
                     </p>
 
                     <button
@@ -741,7 +759,7 @@ export default function InternetoSvetainesPage() {
           </div>
         </section>
 
-        <section className="max-w-6xl mx-auto px-6 pb-16">
+        <section className="mx-auto max-w-6xl px-6 pb-16">
           <div className="grid gap-6 md:grid-cols-2">
             <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
               <h2 className="text-2xl font-bold">Kodėl verta rinktis mane?</h2>
@@ -750,7 +768,7 @@ export default function InternetoSvetainesPage() {
                 <li>• Prisitaikau prie tavo veiklos pobūdžio</li>
                 <li>• Svetainės pritaikytos telefonams</li>
                 <li>• Viskas aiškiai, tvarkingai ir be nereikalingo sudėtingumo</li>
-                <li>• Galima pradėti nuo mažesnio varianto ir vėliau plėsti</li>
+                <li>• Galiu padėti ir su tekstais bei turinio struktūra</li>
               </ul>
             </div>
 
@@ -768,7 +786,7 @@ export default function InternetoSvetainesPage() {
           </div>
         </section>
 
-        <section className="max-w-6xl mx-auto px-6 pb-24">
+        <section className="mx-auto max-w-6xl px-6 pb-24">
           <div className="rounded-3xl bg-gradient-to-r from-slate-900 to-[#0A4834] p-8 text-white md:p-12">
             <div className="max-w-3xl">
               <h2 className="text-3xl font-bold tracking-tight">
