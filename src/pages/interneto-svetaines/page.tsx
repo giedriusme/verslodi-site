@@ -1,8 +1,16 @@
 import { useEffect } from "react";
+import { useForm, ValidationError } from "@formspree/react";
 import Navigation from "../home/components/Navigation";
 import Footer from "../home/components/Footer";
 
 export default function InternetoSvetainesPage() {
+  const [state, handleSubmit, reset] = useForm("xbdpepae", {
+    data: {
+      requestSource: "interneto-svetaines",
+      pageTitle: () => document.title,
+    },
+  });
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -68,10 +76,10 @@ export default function InternetoSvetainesPage() {
 
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <a
-                  href="/#kontaktai"
+                  href="#uzklausa"
                   className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-base font-semibold text-[#0A4834] transition hover:bg-slate-100"
                 >
-                  Aptarkime tavo svetainę
+                  Pateikti užklausą
                 </a>
 
                 <a
@@ -202,6 +210,373 @@ export default function InternetoSvetainesPage() {
           </div>
         </section>
 
+        <section id="uzklausa" className="max-w-6xl mx-auto px-6 pb-16">
+          <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
+            <div className="rounded-3xl bg-gradient-to-br from-slate-900 to-[#0A4834] p-8 text-white">
+              <h3 className="text-3xl font-bold tracking-tight">
+                Papasakok, kokios svetainės tau reikia
+              </h3>
+              <p className="mt-4 text-white/85 leading-8">
+                Užpildyk trumpą užklausą, ir pagal tavo veiklą pasiūlysiu
+                tinkamiausią sprendimą, kainą bei tolimesnius žingsnius.
+              </p>
+
+              <ul className="mt-8 space-y-3 text-white/90">
+                <li>• Kuo aiškesnė užklausa, tuo tikslesnį pasiūlymą gausi</li>
+                <li>• Gali rašyti paprastai, be techninių terminų</li>
+                <li>• Jei neturi visų detalių, vis tiek pildyk — padėsiu susidėlioti</li>
+              </ul>
+            </div>
+
+            <div className="rounded-3xl border border-slate-200 bg-white p-6 md:p-8 shadow-sm">
+              {state.succeeded ? (
+                <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6">
+                  <h4 className="text-2xl font-bold text-[#0A4834]">
+                    Ačiū, tavo užklausa išsiųsta
+                  </h4>
+                  <p className="mt-3 text-slate-700 leading-7">
+                    Gavau tavo užklausą dėl interneto svetainės. Peržiūrėsiu
+                    informaciją ir susisieksiu su tavimi artimiausiu metu.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={reset}
+                    className="mt-6 inline-flex items-center justify-center rounded-xl bg-[#0A4834] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#083b2c]"
+                  >
+                    Pildyti dar kartą
+                  </button>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  <div>
+                    <h3 className="text-2xl font-bold text-slate-900">
+                      Užklausos forma
+                    </h3>
+                    <p className="mt-2 text-slate-600">
+                      Užpildyk pagrindinę informaciją, ir aš paruošiu tau tinkamą
+                      pasiūlymą.
+                    </p>
+                  </div>
+
+                  <div className="grid gap-5 md:grid-cols-2">
+                    <div>
+                      <label htmlFor="name" className="mb-2 block text-sm font-semibold text-slate-800">
+                        Vardas *
+                      </label>
+                      <input
+                        id="name"
+                        type="text"
+                        name="name"
+                        required
+                        className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        placeholder="Tavo vardas"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="email" className="mb-2 block text-sm font-semibold text-slate-800">
+                        El. paštas *
+                      </label>
+                      <input
+                        id="email"
+                        type="email"
+                        name="email"
+                        required
+                        className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        placeholder="tavo@elpastas.lt"
+                      />
+                      <ValidationError
+                        prefix="El. paštas"
+                        field="email"
+                        errors={state.errors}
+                        className="mt-2 text-sm text-red-600"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="phone" className="mb-2 block text-sm font-semibold text-slate-800">
+                        Telefono numeris
+                      </label>
+                      <input
+                        id="phone"
+                        type="tel"
+                        name="phone"
+                        className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        placeholder="+370..."
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="businessName" className="mb-2 block text-sm font-semibold text-slate-800">
+                        Veiklos arba įmonės pavadinimas
+                      </label>
+                      <input
+                        id="businessName"
+                        type="text"
+                        name="businessName"
+                        className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        placeholder="Įmonės arba veiklos pavadinimas"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="activityDescription" className="mb-2 block text-sm font-semibold text-slate-800">
+                      Kuo užsiimate? *
+                    </label>
+                    <textarea
+                      id="activityDescription"
+                      name="activityDescription"
+                      required
+                      rows={4}
+                      className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                      placeholder="Trumpai aprašyk savo veiklą, klientus ir ką norėtum pristatyti svetainėje."
+                    />
+                  </div>
+
+                  <div className="grid gap-5 md:grid-cols-2">
+                    <div>
+                      <label htmlFor="websiteType" className="mb-2 block text-sm font-semibold text-slate-800">
+                        Kokios svetainės reikia? *
+                      </label>
+                      <select
+                        id="websiteType"
+                        name="websiteType"
+                        required
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Pasirinkite
+                        </option>
+                        <option value="vieno-puslapio">Vieno puslapio svetainės</option>
+                        <option value="keliu-puslapiu">Kelių puslapių svetainės</option>
+                        <option value="dar-nezinau">Dar nežinau</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="pageCount" className="mb-2 block text-sm font-semibold text-slate-800">
+                        Kiek puslapių maždaug reikės?
+                      </label>
+                      <select
+                        id="pageCount"
+                        name="pageCount"
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Pasirinkite
+                        </option>
+                        <option value="1">1 puslapis</option>
+                        <option value="2-3">2–3 puslapiai</option>
+                        <option value="4-5">4–5 puslapiai</option>
+                        <option value="6+">6 ar daugiau</option>
+                        <option value="nezinau">Dar nežinau</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="budget" className="mb-2 block text-sm font-semibold text-slate-800">
+                        Planuojamas biudžetas
+                      </label>
+                      <select
+                        id="budget"
+                        name="budget"
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Pasirinkite
+                        </option>
+                        <option value="iki-150">Iki 150 €</option>
+                        <option value="150-250">150–250 €</option>
+                        <option value="250-500">250–500 €</option>
+                        <option value="500+">500 € ir daugiau</option>
+                        <option value="reikia-pasiulymo">Reikia pasiūlymo</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="timeline" className="mb-2 block text-sm font-semibold text-slate-800">
+                        Kada norėtumėte paleisti svetainę?
+                      </label>
+                      <select
+                        id="timeline"
+                        name="timeline"
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Pasirinkite
+                        </option>
+                        <option value="kuo-greiciau">Kuo greičiau</option>
+                        <option value="1-2-savaites">Per 1–2 savaites</option>
+                        <option value="2-4-savaites">Per 2–4 savaites</option>
+                        <option value="veliau">Vėliau</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-5 md:grid-cols-2">
+                    <div>
+                      <label htmlFor="hasTexts" className="mb-2 block text-sm font-semibold text-slate-800">
+                        Ar jau turite tekstus?
+                      </label>
+                      <select
+                        id="hasTexts"
+                        name="hasTexts"
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Pasirinkite
+                        </option>
+                        <option value="taip">Taip</option>
+                        <option value="dalinai">Dalinai</option>
+                        <option value="ne">Ne</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="hasLogo" className="mb-2 block text-sm font-semibold text-slate-800">
+                        Ar jau turite logotipą?
+                      </label>
+                      <select
+                        id="hasLogo"
+                        name="hasLogo"
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Pasirinkite
+                        </option>
+                        <option value="taip">Taip</option>
+                        <option value="ne">Ne</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="hasImages" className="mb-2 block text-sm font-semibold text-slate-800">
+                        Ar jau turite nuotraukas?
+                      </label>
+                      <select
+                        id="hasImages"
+                        name="hasImages"
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Pasirinkite
+                        </option>
+                        <option value="taip">Taip</option>
+                        <option value="dalinai">Dalinai</option>
+                        <option value="ne">Ne</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label htmlFor="needsSecondLanguage" className="mb-2 block text-sm font-semibold text-slate-800">
+                        Ar reikės antros kalbos?
+                      </label>
+                      <select
+                        id="needsSecondLanguage"
+                        name="needsSecondLanguage"
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Pasirinkite
+                        </option>
+                        <option value="taip">Taip</option>
+                        <option value="ne">Ne</option>
+                        <option value="dar-nezinau">Dar nežinau</option>
+                      </select>
+                    </div>
+
+                    <div className="md:col-span-2">
+                      <label htmlFor="needsBooking" className="mb-2 block text-sm font-semibold text-slate-800">
+                        Ar reikės registracijos / rezervacijos formos?
+                      </label>
+                      <select
+                        id="needsBooking"
+                        name="needsBooking"
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                        defaultValue=""
+                      >
+                        <option value="" disabled>
+                          Pasirinkite
+                        </option>
+                        <option value="taip">Taip</option>
+                        <option value="ne">Ne</option>
+                        <option value="dar-nezinau">Dar nežinau</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="websiteGoal" className="mb-2 block text-sm font-semibold text-slate-800">
+                      Koks pagrindinis svetainės tikslas?
+                    </label>
+                    <textarea
+                      id="websiteGoal"
+                      name="websiteGoal"
+                      rows={4}
+                      className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                      placeholder="Pavyzdžiui: pristatyti paslaugas, rinkti užklausas, didinti pasitikėjimą, gauti registracijas."
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="examples" className="mb-2 block text-sm font-semibold text-slate-800">
+                      Patinkančių svetainių pavyzdžiai
+                    </label>
+                    <textarea
+                      id="examples"
+                      name="examples"
+                      rows={4}
+                      className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                      placeholder="Įklijuok nuorodas į svetaines, kurių stilius ar struktūra tau patinka."
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="notes" className="mb-2 block text-sm font-semibold text-slate-800">
+                      Papildoma informacija
+                    </label>
+                    <textarea
+                      id="notes"
+                      name="notes"
+                      rows={5}
+                      className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#0A4834] focus:ring-2 focus:ring-[#0A4834]/15"
+                      placeholder="Parašyk viską, kas gali padėti geriau suprasti tavo poreikį."
+                    />
+                  </div>
+
+                  <ValidationError
+                    errors={state.errors}
+                    className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
+                  />
+
+                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="text-sm text-slate-500">
+                      Užpildžius formą, užklausa bus išsiųsta tiesiai tau per Formspree.
+                    </p>
+
+                    <button
+                      type="submit"
+                      disabled={state.submitting}
+                      className="inline-flex items-center justify-center rounded-xl bg-[#0A4834] px-6 py-3 text-base font-semibold text-white transition hover:bg-[#083b2c] disabled:cursor-not-allowed disabled:opacity-70"
+                    >
+                      {state.submitting ? "Siunčiama..." : "Siųsti užklausą"}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </section>
+
         <section className="max-w-6xl mx-auto px-6 pb-16">
           <div className="grid gap-6 md:grid-cols-2">
             <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
@@ -236,16 +611,16 @@ export default function InternetoSvetainesPage() {
                 Nori savo verslui modernios interneto svetainės?
               </h3>
               <p className="mt-4 text-lg leading-8 text-white/85">
-                Parašyk man, ir pasiūlysiu tinkamiausią variantą pagal tavo veiklą,
-                poreikius ir tikslą.
+                Užpildyk formą aukščiau, ir paruošiu tau tinkamiausią pasiūlymą
+                pagal tavo veiklą, poreikius ir tikslą.
               </p>
 
               <div className="mt-8 flex flex-col gap-4 sm:flex-row">
                 <a
-                  href="/#kontaktai"
+                  href="#uzklausa"
                   className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-base font-semibold text-[#0A4834] transition hover:bg-slate-100"
                 >
-                  Susisiekti
+                  Pildyti formą
                 </a>
 
                 <a
